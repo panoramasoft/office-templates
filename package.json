@@ -1,0 +1,14 @@
+{
+  "name": "office-templates",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Reviewed office templates for Virtual Office. The version is the app version the checker in checker/ was copied from.",
+  "type": "module",
+  "license": "CC0-1.0",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "build": "node scripts/build.ts",
+    "check": "node scripts/build.ts --check && node scripts/check.ts && node scripts/verify.ts"
+  },
+  "dependencies": { "zod": "4.6.7" }
+}
