@@ -1,0 +1,6 @@
+# Changes to the trust chain need the owner.
+/scripts/   @panoramasoft
+/checker/   @panoramasoft
+/keys/      @panoramasoft
+/.github/   @panoramasoft
+/CODEOWNERS @panoramasoft
