@@ -55,10 +55,20 @@ After each reviewed merge to `main`, and at least every 60 days:
 
 ```sh
 git checkout main && git pull
-node scripts/make-index.ts     # pins HEAD; serial + 1; expires in 60 days
-node scripts/sign.ts           # writes index.json.sig
+node scripts/make-index.ts     # from origin/main: its templates, its latest commit, its serial + 1
+node scripts/sign.ts           # re-checks everything against origin/main, then writes index.json.sig
 git add index.json index.json.sig && git commit -m "Index <serial>" && git push
 ```
+
+`sign.ts` signs nothing it can't re-derive from `origin/main`. It refuses:
+- a commit that isn't on main: a pull request's or a fork's commit can be served under this repository's address, but it was never reviewed;
+- a hash or detail that differs from `built/<id>.json` at that commit;
+- a list that isn't exactly main's templates;
+- a serial not above the one on main;
+- a date in the future, or more than 90 days of life;
+- any key the app doesn't know.
+
+The check on pull requests trusts only the public keys listed on `main`.
 
 To withdraw a template: delete its folder and built file, merge, then make and sign a new index. The higher serial means no app goes back to the list that still had it.
 

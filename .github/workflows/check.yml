@@ -25,5 +25,7 @@ jobs:
         run: node scripts/build.ts --check
       - name: The app's rules (format, sizes, hidden characters; addresses and warnings for the reviewer)
         run: node scripts/check.ts
-      - name: index.json, if present, is signed with a listed key
+      - name: index.json, if present, is signed with a key listed on main
         run: node scripts/verify.ts
+      - name: The scripts refuse what they must (make-index, sign, verify, keygen)
+        run: node --test test/

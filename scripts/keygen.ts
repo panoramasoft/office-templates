@@ -12,8 +12,18 @@ import { ROOT, fail, rawPublicKey } from './lib.ts';
 
 const at = process.argv.indexOf('--out');
 const out = path.resolve(at > 0 ? process.argv[at + 1] : path.join(os.homedir(), '.office-templates-key', 'signing-key.pem'));
-const inside = path.relative(ROOT, out);
-if (!inside.startsWith('..') && !path.isAbsolute(inside)) fail('The private key must not be written inside this repository. Pick a folder outside it.');
+// Compared by real paths, so a symlink to the repository counts as inside (review 7C-4 S2); and
+// ".." only as a whole first part, so a folder named "..x" inside it does too.
+const real = (p: string): string => {
+  try {
+    return fs.realpathSync(p);
+  } catch {
+    return path.join(real(path.dirname(p)), path.basename(p));
+  }
+};
+const rel = path.relative(real(ROOT), real(out));
+const outside = rel === '..' || rel.startsWith(`..${path.sep}`) || path.isAbsolute(rel);
+if (!outside) fail('The private key must not be written inside this repository. Pick a folder outside it.');
 if (fs.existsSync(out)) fail(`${out} already exists. Keygen never overwrites a key: move it away first if you mean to replace it.`);
 
 const { publicKey, privateKey } = generateKeyPairSync('ed25519');
