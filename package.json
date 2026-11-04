@@ -9,7 +9,7 @@
   "scripts": {
     "build": "node scripts/build.ts",
     "check": "node scripts/build.ts --check && node scripts/check.ts && node scripts/verify.ts",
-    "test": "node --test test/"
+    "test": "node --test test/*.test.ts"
   },
   "dependencies": { "zod": "4.6.7" }
 }

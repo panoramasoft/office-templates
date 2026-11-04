@@ -28,4 +28,4 @@ jobs:
       - name: index.json, if present, is signed with a key listed on main
         run: node scripts/verify.ts
       - name: The scripts refuse what they must (make-index, sign, verify, keygen)
-        run: node --test test/
+        run: node --test test/*.test.ts
