@@ -1,3 +1,4 @@
 # The gallery's Ed25519 public keys, one per line, base64 of the 32-byte key (what
 # scripts/keygen.ts prints). The same keys as GALLERY_KEYS in the app. Public: safe to commit.
 # The private key never comes here.
+B0f/aPMY5rXrFGvVTpTilqMAgAvpkDPld9sAnmgoH3c=
